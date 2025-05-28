@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { TRANSLATE_PROMPT } from '@renderer/config/prompts'
 import {
+  AssistantsSortType,
   CodeStyleVarious,
   LanguageVarious,
   MathEngine,
@@ -34,6 +35,7 @@ export type AssistantIconType = 'model' | 'emoji' | 'none'
 export interface SettingsState {
   showAssistants: boolean
   showTopics: boolean
+  assistantsTabSortType: AssistantsSortType
   sendMessageShortcut: SendMessageShortcut
   language: LanguageVarious
   targetLanguage: TranslateLanguageVarious
@@ -176,6 +178,7 @@ export type MultiModelMessageStyle = 'horizontal' | 'vertical' | 'fold' | 'grid'
 export const initialState: SettingsState = {
   showAssistants: true,
   showTopics: true,
+  assistantsTabSortType: 'list',
   sendMessageShortcut: 'Enter',
   language: navigator.language as LanguageVarious,
   targetLanguage: 'english' as TranslateLanguageVarious,
@@ -319,6 +322,9 @@ const settingsSlice = createSlice({
     },
     toggleShowTopics: (state) => {
       state.showTopics = !state.showTopics
+    },
+    setAssistantsTabSortType: (state, action: PayloadAction<AssistantsSortType>) => {
+      state.assistantsTabSortType = action.payload
     },
     setSendMessageShortcut: (state, action: PayloadAction<SendMessageShortcut>) => {
       state.sendMessageShortcut = action.payload
@@ -647,6 +653,7 @@ export const {
   toggleShowAssistants,
   setShowTopics,
   toggleShowTopics,
+  setAssistantsTabSortType,
   setSendMessageShortcut,
   setLanguage,
   setTargetLanguage,
