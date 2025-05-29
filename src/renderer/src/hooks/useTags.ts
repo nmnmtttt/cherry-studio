@@ -40,28 +40,37 @@ export const useTags = () => {
 
   const getGroupedAssistants = useMemo(() => {
     const grouped: { tag: string; assistants: Assistant[] }[] = []
+    const untagged: Assistant[] = []
 
-    allTags.forEach((tag) => {
-      const taggedAssistants = assistants.filter((a) => a.tags?.includes(tag))
-      if (taggedAssistants.length > 0) {
-        grouped.push({
-          tag,
-          assistants: taggedAssistants.sort((a, b) => a.name.localeCompare(b.name))
+    // 先处理有标签的助手
+    assistants.forEach((assistant) => {
+      if (assistant.tags?.length) {
+        assistant.tags.forEach((tag) => {
+          const existingGroup = grouped.find((g) => g.tag === tag)
+          if (existingGroup) {
+            existingGroup.assistants.push(assistant)
+          } else {
+            grouped.push({
+              tag,
+              assistants: [assistant]
+            })
+          }
         })
+      } else {
+        untagged.push(assistant)
       }
     })
 
-    grouped.sort((a, b) => a.tag.localeCompare(b.tag))
-
-    const untagged = assistants.filter((a) => !a.tags?.length)
+    // 将未分组的放在最前面
     if (untagged.length > 0) {
       grouped.unshift({
         tag: t('assistants.tags.untagged'),
         assistants: untagged
       })
     }
+
     return grouped
-  }, [allTags, assistants, t])
+  }, [assistants, t])
 
   return {
     allTags,

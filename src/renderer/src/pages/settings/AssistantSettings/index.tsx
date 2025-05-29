@@ -15,7 +15,6 @@ import AssistantMessagesSettings from './AssistantMessagesSettings'
 import AssistantModelSettings from './AssistantModelSettings'
 import AssistantPromptSettings from './AssistantPromptSettings'
 import AssistantRegularPromptsSettings from './AssistantRegularPromptsSettings'
-import AssistantTagsSettings from './AssistantTagsSettings'
 
 interface AssistantSettingPopupShowParams {
   assistant: Assistant
@@ -155,7 +154,6 @@ const AssistantSettingPopupContainer: React.FC<Props> = ({ resolve, tab, ...prop
           {menu === 'regular_phrases' && (
             <AssistantRegularPromptsSettings assistant={assistant} updateAssistant={updateAssistant} />
           )}
-          {menu === 'tags' && <AssistantTagsSettings assistant={assistant} updateAssistant={updateAssistant} />}
         </Settings>
       </HStack>
     </StyledModal>

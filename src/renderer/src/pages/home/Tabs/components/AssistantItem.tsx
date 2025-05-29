@@ -1,9 +1,9 @@
 import {
   DeleteOutlined,
   EditOutlined,
+  FormOutlined,
   MenuOutlined,
   MinusCircleOutlined,
-  PlusOutlined,
   SaveOutlined,
   SmileOutlined,
   SortAscendingOutlined,
@@ -164,7 +164,7 @@ const AssistantItem: FC<AssistantItemProps> = ({
       {
         label: t('assistants.tags.manage'),
         key: 'all-tags',
-        icon: <PlusOutlined />,
+        icon: <FormOutlined />,
         children: [
           ...allTags.map((tag) => ({
             label: tag,
