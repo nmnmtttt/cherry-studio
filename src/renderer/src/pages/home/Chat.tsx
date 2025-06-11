@@ -7,7 +7,7 @@ import { useSettings } from '@renderer/hooks/useSettings'
 import { useShortcut } from '@renderer/hooks/useShortcuts'
 import { Flex } from 'antd'
 import { debounce } from 'lodash'
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import styled from 'styled-components'
 
@@ -16,17 +16,12 @@ import Messages from './Messages/Messages'
 
 const Chat: FC = () => {
   const { activeAssistant, activeTopic, setActiveTopic } = useChat()
-  const { messageStyle, showAssistants } = useSettings()
+  const { messageStyle } = useSettings()
   const { isMultiSelectMode } = useChatContext(activeTopic)
 
   const mainRef = React.useRef<HTMLDivElement>(null)
   const contentSearchRef = React.useRef<ContentSearchRef>(null)
   const [filterIncludeUser, setFilterIncludeUser] = useState(false)
-
-  const maxWidth = useMemo(() => {
-    const minusAssistantsWidth = showAssistants ? '- var(--assistants-width)' : ''
-    return `calc(100vw - ${minusAssistantsWidth})`
-  }, [showAssistants])
 
   useHotkeys('esc', () => {
     contentSearchRef.current?.disable()
@@ -93,35 +88,29 @@ const Chat: FC = () => {
   }
 
   return (
-    <Container id="chat" className={messageStyle}>
-      <Main ref={mainRef} id="chat-main" vertical flex={1} justify="space-between" style={{ maxWidth }}>
-        <ContentSearch
-          ref={contentSearchRef}
-          searchTarget={mainRef as React.RefObject<HTMLElement>}
-          filter={contentSearchFilter}
-          includeUser={filterIncludeUser}
-          onIncludeUserChange={userOutlinedItemClickHandler}
-        />
-        <Messages
-          key={activeTopic.id}
-          assistant={activeAssistant}
-          topic={activeTopic}
-          setActiveTopic={setActiveTopic}
-          onComponentUpdate={messagesComponentUpdateHandler}
-          onFirstUpdate={messagesComponentFirstUpdateHandler}
-        />
-        <QuickPanelProvider>
-          <Inputbar />
-          {isMultiSelectMode && <MultiSelectActionPopup topic={activeTopic} />}
-        </QuickPanelProvider>
-      </Main>
-    </Container>
+    <Main ref={mainRef} id="chat-main" className={messageStyle} vertical flex={1} justify="space-between">
+      <ContentSearch
+        ref={contentSearchRef}
+        searchTarget={mainRef as React.RefObject<HTMLElement>}
+        filter={contentSearchFilter}
+        includeUser={filterIncludeUser}
+        onIncludeUserChange={userOutlinedItemClickHandler}
+      />
+      <Messages
+        key={activeTopic.id}
+        assistant={activeAssistant}
+        topic={activeTopic}
+        setActiveTopic={setActiveTopic}
+        onComponentUpdate={messagesComponentUpdateHandler}
+        onFirstUpdate={messagesComponentFirstUpdateHandler}
+      />
+      <QuickPanelProvider>
+        <Inputbar />
+        {isMultiSelectMode && <MultiSelectActionPopup topic={activeTopic} />}
+      </QuickPanelProvider>
+    </Main>
   )
 }
-
-const Container = styled.div`
-  height: 100%;
-`
 
 const Main = styled(Flex)`
   height: calc(100vh - var(--navbar-height));

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import Chat from './Chat'
 import ChatNavbar from './ChatNavbar'
 
-const HomePage: FC = () => {
+const HomePage: FC<{ style?: React.CSSProperties }> = ({ style }) => {
   const { showAssistants, showTopics, topicPosition } = useSettings()
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const HomePage: FC = () => {
   }, [showAssistants, showTopics, topicPosition])
 
   return (
-    <Container id="home-page">
+    <Container id="home-page" style={style}>
       <ChatNavbar />
       <ContentContainer id="content-container">
         <Chat />

@@ -298,7 +298,7 @@ const GridContainer = styled.div<{ $count: number; $layout: MultiModelMessageSty
     $layout === 'grid' &&
     css`
       margin-top: 15px;
-      grid-template-columns: repeat(${$count > 1 ? $gridColumns || 2 : 1}, minmax(0, 1fr));
+      grid-template-columns: repeat(${$count > 1 ? $gridColumns || 2 : 1}, minmax(0, 1fr)) !important;
       grid-template-rows: auto;
       gap: 16px;
     `}
@@ -339,7 +339,7 @@ const MessageWrapper = styled(Scrollbar)<MessageWrapperProps>`
       return css`
         border: 0.5px solid var(--color-border);
         padding: 10px 10px 0 10px;
-        border-radius: 6px;
+        border-radius: 8px;
         max-height: 600px;
       `
     }
@@ -356,12 +356,12 @@ const MessageWrapper = styled(Scrollbar)<MessageWrapperProps>`
           overflow-y: ${$isInPopover ? 'auto' : 'hidden'};
           border: 0.5px solid ${$isInPopover ? 'transparent' : 'var(--color-border)'};
           padding: 10px;
-          border-radius: 6px;
+          border-radius: 8px;
           background-color: var(--color-background);
         `
       : css`
           overflow-y: ${$layout === 'horizontal' ? 'auto' : 'visible'};
-          border-radius: 6px;
+          border-radius: 8px;
         `
   }}
 `

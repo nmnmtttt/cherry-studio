@@ -15,10 +15,8 @@ const RouteContainer = () => {
   const isHomePage = location.pathname === '/'
 
   return (
-    <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-      <div style={{ display: isHomePage ? 'flex' : 'none', flex: 1 }}>
-        <HomePage />
-      </div>
+    <div style={{ display: 'flex', width: '100%', height: '100%', minWidth: '0' }}>
+      <HomePage style={{ display: isHomePage ? 'flex' : 'none' }} />
       <div style={{ display: isHomePage ? 'none' : 'flex', flex: 1 }}>
         <Routes location={location}>
           <Route path="/agents" element={<AgentsPage />} />
