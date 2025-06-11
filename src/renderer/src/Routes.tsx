@@ -1,5 +1,7 @@
+import { IpcChannel } from '@shared/IpcChannel'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import AgentsPage from './pages/agents/AgentsPage'
@@ -15,6 +17,7 @@ import TranslatePage from './pages/translate/TranslatePage'
 const WILDCARD_ROUTES = ['/settings', '/paintings', '/mcp-servers']
 
 const RouteContainer = () => {
+  const navigate = useNavigate()
   const location = useLocation()
   const isHomePage = location.pathname === '/'
 
@@ -23,6 +26,14 @@ const RouteContainer = () => {
 
   // 使用主路由作为 key，这样同一主路由下的切换不会触发动画
   const animationKey = mainPath || location.pathname
+
+  useEffect(() => {
+    window.api.navigation.url(location.pathname)
+  }, [location.pathname])
+
+  useEffect(() => {
+    window.electron.ipcRenderer.on(IpcChannel.Navigation_Close, () => navigate('/'))
+  }, [navigate])
 
   return (
     <Container>

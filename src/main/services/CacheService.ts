@@ -1,7 +1,7 @@
 interface CacheItem<T> {
   data: T
   timestamp: number
-  duration: number
+  duration?: number
 }
 
 export class CacheService {
@@ -11,9 +11,9 @@ export class CacheService {
    * Set cache
    * @param key Cache key
    * @param data Cache data
-   * @param duration Cache duration (in milliseconds)
+   * @param duration Cache duration (in milliseconds), if not set the cache will never expire
    */
-  static set<T>(key: string, data: T, duration: number): void {
+  static set<T>(key: string, data: T, duration?: number): void {
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
@@ -29,6 +29,11 @@ export class CacheService {
   static get<T>(key: string): T | null {
     const item = this.cache.get(key)
     if (!item) return null
+
+    // If duration is undefined, cache never expires
+    if (item.duration === undefined) {
+      return item.data
+    }
 
     const now = Date.now()
     if (now - item.timestamp > item.duration) {
@@ -62,6 +67,11 @@ export class CacheService {
   static has(key: string): boolean {
     const item = this.cache.get(key)
     if (!item) return false
+
+    // If duration is undefined, cache never expires
+    if (item.duration === undefined) {
+      return true
+    }
 
     const now = Date.now()
     if (now - item.timestamp > item.duration) {

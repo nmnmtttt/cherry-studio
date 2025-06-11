@@ -12,6 +12,7 @@ import { join } from 'path'
 
 import icon from '../../../build/icon.png?asset'
 import { titleBarOverlayDark, titleBarOverlayLight } from '../config'
+import { CacheService } from './CacheService'
 import { configManager } from './ConfigManager'
 import { contextMenu } from './ContextMenu'
 import { initSessionUserAgent } from './WebviewService'
@@ -297,6 +298,11 @@ export class WindowService {
       // 如果已经触发退出，直接退出
       if (app.isQuitting) {
         return app.quit()
+      }
+
+      if (CacheService.get('navigation-url') !== '/') {
+        event.preventDefault()
+        return mainWindow.webContents.send(IpcChannel.Navigation_Close)
       }
 
       // 托盘及关闭行为设置

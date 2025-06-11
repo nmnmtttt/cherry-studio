@@ -229,7 +229,10 @@ const api = {
     minimizeActionWindow: () => ipcRenderer.invoke(IpcChannel.Selection_ActionWindowMinimize),
     pinActionWindow: (isPinned: boolean) => ipcRenderer.invoke(IpcChannel.Selection_ActionWindowPin, isPinned)
   },
-  quoteToMainWindow: (text: string) => ipcRenderer.invoke(IpcChannel.App_QuoteToMain, text)
+  quoteToMainWindow: (text: string) => ipcRenderer.invoke(IpcChannel.App_QuoteToMain, text),
+  navigation: {
+    url: (url: string) => ipcRenderer.invoke(IpcChannel.Navigation_Url, url)
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -38,19 +38,6 @@ export const NavbarMain: FC<Props> = ({ children, ...props }) => {
   )
 }
 
-const rotateAnimation = keyframes`
-  from {
-    transform: rotate(-180deg);
-  }
-  to {
-    transform: rotate(0);
-  }
-`
-
-const AnimatedButton = styled(Button)`
-  animation: ${rotateAnimation} 0.4s ease-out;
-`
-
 const MacCloseIcon = () => {
   const navigate = useNavigate()
 
@@ -108,7 +95,7 @@ const NavbarMainContainer = styled.div<{ $isFullscreen: boolean }>`
   max-height: var(--navbar-height);
   min-height: var(--navbar-height);
   justify-content: space-between;
-  padding-left: ${isMac ? '70px' : '10px'};
+  padding-left: ${({ $isFullscreen }) => ($isFullscreen ? '10px' : isMac ? '70px' : '10px')};
   font-weight: bold;
   color: var(--color-text-1);
   padding-right: ${({ $isFullscreen }) => ($isFullscreen ? '12px' : isWindows ? '135px' : isLinux ? '120px' : '12px')};
@@ -126,4 +113,17 @@ const NavbarCenterContainer = styled.div`
   font-weight: bold;
   justify-content: space-between;
   color: var(--color-text-1);
+`
+
+const rotateAnimation = keyframes`
+  from {
+    transform: rotate(-180deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+`
+
+const AnimatedButton = styled(Button)`
+  animation: ${rotateAnimation} 0.4s ease-out;
 `
