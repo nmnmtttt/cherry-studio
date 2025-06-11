@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -18,21 +17,12 @@ const WILDCARD_ROUTES = ['/settings', '/paintings', '/mcp-servers']
 const RouteContainer = () => {
   const location = useLocation()
   const isHomePage = location.pathname === '/'
-  const [isReady, setIsReady] = useState(false)
 
   // 获取当前路径的主路由部分
   const mainPath = WILDCARD_ROUTES.find((route) => location.pathname.startsWith(route))
 
   // 使用主路由作为 key，这样同一主路由下的切换不会触发动画
   const animationKey = mainPath || location.pathname
-
-  // 路由变化时重置状态
-  useEffect(() => {
-    setIsReady(false)
-    // 给一个很短的延迟，确保组件已经渲染
-    const timer = setTimeout(() => setIsReady(true), 300)
-    return () => clearTimeout(timer)
-  }, [location.pathname])
 
   return (
     <Container>
@@ -41,8 +31,8 @@ const RouteContainer = () => {
         {!isHomePage && (
           <PageContainer
             key={animationKey}
-            initial={isReady ? 'initial' : false}
-            animate={isReady ? 'animate' : false}
+            initial="initial"
+            animate="animate"
             exit="exit"
             variants={pageVariants}
             transition={pageTransition}>
@@ -92,7 +82,7 @@ const PageContainer = styled(motion.div)`
 
 const pageTransition = {
   type: 'tween',
-  duration: 0.25,
+  duration: 0.15,
   ease: 'easeInOut'
 }
 
