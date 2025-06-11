@@ -143,8 +143,9 @@ const Inputbar: FC = () => {
         if (textareaHeight && !force) {
           return
         }
-        textArea.style.height = 'auto'
-        textArea.style.height = textArea?.scrollHeight > 400 ? '400px' : `${textArea?.scrollHeight}px`
+        if (textArea?.scrollHeight) {
+          textArea.style.height = Math.min(textArea.scrollHeight, 400) + 'px'
+        }
       }
     },
     [textareaHeight]
@@ -791,7 +792,7 @@ const Inputbar: FC = () => {
             ref={textareaRef}
             style={{
               fontSize,
-              minHeight: textareaHeight ? `${textareaHeight}px` : undefined
+              minHeight: textareaHeight ? `${textareaHeight}px` : '30px'
             }}
             styles={{ textarea: TextareaStyle }}
             onFocus={(e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -924,7 +925,7 @@ const InputBarContainer = styled.div`
 
 const TextareaStyle: CSSProperties = {
   paddingLeft: 0,
-  padding: '6px 15px 8px' // 减小顶部padding
+  padding: '6px 15px 0px' // 减小顶部padding
 }
 
 const Textarea = styled(TextArea)`
@@ -948,10 +949,8 @@ const Toolbar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 8px;
-  padding-bottom: 0;
-  margin-bottom: 5px;
-  height: 30px;
+  padding: 5px 8px;
+  height: 40px;
   gap: 16px;
   position: relative;
   z-index: 2;
