@@ -51,6 +51,7 @@ export const Container = styled.div`
   width: var(--assistant-width);
   max-width: var(--assistant-width);
   border-right: 0.5px solid var(--color-border);
+  height: 100vh;
 `
 
 export const MainMenu = styled.div`

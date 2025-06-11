@@ -5656,6 +5656,7 @@ __metadata:
     eslint-plugin-unused-imports: "npm:^4.1.4"
     fast-diff: "npm:^1.3.0"
     fast-xml-parser: "npm:^5.2.0"
+    framer-motion: "npm:^12.17.0"
     franc-min: "npm:^6.2.0"
     fs-extra: "npm:^11.2.0"
     html-to-image: "npm:^1.11.13"
@@ -9863,6 +9864,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:^12.17.0":
+  version: 12.17.0
+  resolution: "framer-motion@npm:12.17.0"
+  dependencies:
+    motion-dom: "npm:^12.17.0"
+    motion-utils: "npm:^12.12.1"
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10c0/3262ab125650d71cd13eb9f4838da70550ea383d68a2fbd2664b05bac88b7420fe7db25911fbd30cbc237327d98a4567df34e675c8261dde559a9375e580103c
+  languageName: node
+  linkType: hard
+
 "franc-min@npm:^6.2.0":
   version: 6.2.0
   resolution: "franc-min@npm:6.2.0"
@@ -13549,6 +13572,22 @@ __metadata:
   dependencies:
     motion-utils: "npm:^12.9.4"
   checksum: 10c0/2c362eb94c941bbbc42288a6738b8c7a11933687b3b20aa6c9f2c3dedc69e5c7995c7348499b535f8abe5ed9ea81d88f9eb2f98b69f5012bcd80b8f7a64a1c2c
+  languageName: node
+  linkType: hard
+
+"motion-dom@npm:^12.17.0":
+  version: 12.17.0
+  resolution: "motion-dom@npm:12.17.0"
+  dependencies:
+    motion-utils: "npm:^12.12.1"
+  checksum: 10c0/1ec428e113f334193dcd52293c94bca21fcca97f3825521d1dafe41f6b999e8dda5013b48de2c09e2f32204f80d1d7281079ba3a142c71b8d6923a0ddb056513
+  languageName: node
+  linkType: hard
+
+"motion-utils@npm:^12.12.1":
+  version: 12.12.1
+  resolution: "motion-utils@npm:12.12.1"
+  checksum: 10c0/880a174769d1be42b46cfb34af81b4a629c068d30d5cf7e07d249fbf2f5121d577482d3ea5bdc1db549c0288733e1e987efecb195fae350995270651559c6697
   languageName: node
   linkType: hard
 

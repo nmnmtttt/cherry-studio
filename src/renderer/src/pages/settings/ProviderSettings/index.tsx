@@ -7,7 +7,7 @@ import ImageStorage from '@renderer/services/ImageStorage'
 import { INITIAL_PROVIDERS } from '@renderer/store/llm'
 import { Provider } from '@renderer/types'
 import { droppableReorder, generateColorFromChar, getFirstCharacter, uuid } from '@renderer/utils'
-import { Avatar, Button, Dropdown, Input, MenuProps, Tag } from 'antd'
+import { Avatar, Button, Dropdown, Input, MenuProps, Spin, Tag } from 'antd'
 import { Search, UserPen } from 'lucide-react'
 import { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,6 +27,7 @@ const ProvidersList: FC = () => {
   const [searchText, setSearchText] = useState<string>('')
   const [dragging, setDragging] = useState(false)
   const [providerLogos, setProviderLogos] = useState<Record<string, string>>({})
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const loadAllLogos = async () => {
@@ -240,6 +241,18 @@ const ProvidersList: FC = () => {
 
     return isProviderMatch || isModelMatch
   })
+
+  useEffect(() => {
+    setTimeout(() => setReady(true), 250)
+  }, [])
+
+  if (!ready) {
+    return (
+      <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Spin />
+      </div>
+    )
+  }
 
   return (
     <Container className="selectable">

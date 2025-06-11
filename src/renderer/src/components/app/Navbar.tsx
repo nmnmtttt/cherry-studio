@@ -5,7 +5,7 @@ import { CircleArrowLeft, X } from 'lucide-react'
 import type { FC, PropsWithChildren } from 'react'
 import type { HTMLAttributes } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 type Props = PropsWithChildren & HTMLAttributes<HTMLDivElement>
 
@@ -38,6 +38,19 @@ export const NavbarMain: FC<Props> = ({ children, ...props }) => {
   )
 }
 
+const rotateAnimation = keyframes`
+  from {
+    transform: rotate(-180deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+`
+
+const AnimatedButton = styled(Button)`
+  animation: ${rotateAnimation} 0.4s ease-out;
+`
+
 const MacCloseIcon = () => {
   const navigate = useNavigate()
 
@@ -45,7 +58,7 @@ const MacCloseIcon = () => {
     return null
   }
 
-  return <Button type="text" icon={<X size={18} />} onClick={() => navigate('/')} className="nodrag" />
+  return <AnimatedButton type="text" icon={<X size={18} />} onClick={() => navigate('/')} className="nodrag" />
 }
 
 const CloseIcon = () => {
@@ -90,6 +103,7 @@ const NavbarMainContainer = styled.div<{ $isFullscreen: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: var(--color-background);
   height: var(--navbar-height);
   max-height: var(--navbar-height);
   min-height: var(--navbar-height);

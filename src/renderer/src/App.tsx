@@ -12,7 +12,6 @@ import { NotificationProvider } from './context/NotificationProvider'
 import StyleSheetManager from './context/StyleSheetManager'
 import { ThemeProvider } from './context/ThemeProvider'
 import NavigationHandler from './handler/NavigationHandler'
-import MainSidebar from './pages/home/MainSidebar/MainSidebar'
 import Routes from './Routes'
 
 function App(): React.ReactElement {
@@ -27,7 +26,6 @@ function App(): React.ReactElement {
                   <TopViewContainer>
                     <HashRouter>
                       <NavigationHandler />
-                      <MainSidebar />
                       <Routes />
                     </HashRouter>
                   </TopViewContainer>

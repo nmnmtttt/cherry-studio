@@ -1,7 +1,6 @@
 import { Navbar } from '@renderer/components/app/Navbar'
 import NarrowModeIcon from '@renderer/components/Icons/NarrowModeIcon'
 import { HStack } from '@renderer/components/Layout'
-import MinAppsPopover from '@renderer/components/Popups/MinAppsPopover'
 import SearchPopup from '@renderer/components/Popups/SearchPopup'
 import { isLinux, isMac, isWindows } from '@renderer/config/constant'
 import { useAssistant } from '@renderer/hooks/useAssistant'
@@ -17,6 +16,7 @@ import { Tooltip } from 'antd'
 import { t } from 'i18next'
 import { LayoutGrid, PanelLeft, PanelRight, Search } from 'lucide-react'
 import { FC } from 'react'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
 import SelectModelButton from './components/SelectModelButton'
@@ -29,6 +29,7 @@ const ChatNavbar: FC = () => {
   const isFullscreen = useFullscreen()
   const { sidebarIcons, narrowMode } = useSettings()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   useShortcut('search_message', SearchPopup.show)
 
@@ -63,13 +64,11 @@ const ChatNavbar: FC = () => {
             </NarrowIcon>
           </Tooltip>
           {sidebarIcons.visible.includes('minapp') && (
-            <MinAppsPopover>
-              <Tooltip title={t('minapp.title')} mouseEnterDelay={0.8}>
-                <NarrowIcon>
-                  <LayoutGrid size={18} />
-                </NarrowIcon>
-              </Tooltip>
-            </MinAppsPopover>
+            <Tooltip title={t('minapp.title')} mouseEnterDelay={0.8}>
+              <NarrowIcon onClick={() => navigate('/apps')}>
+                <LayoutGrid size={18} />
+              </NarrowIcon>
+            </Tooltip>
           )}
         </HStack>
       </NavbarContainer>

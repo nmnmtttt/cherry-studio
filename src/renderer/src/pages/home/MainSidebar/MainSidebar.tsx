@@ -133,10 +133,6 @@ const MainSidebar: FC = () => {
     return null
   }
 
-  if (location.pathname !== '/') {
-    return null
-  }
-
   return (
     <Container id="main-sidebar">
       <MainNavbar />
@@ -165,13 +161,7 @@ const MainSidebar: FC = () => {
               transition={{ duration: 0.2 }}>
               <SubMenu>
                 {appMenuItems.map((item) => (
-                  <MainMenuItem
-                    key={item.path}
-                    active={isRoutes(item.path)}
-                    onClick={() => {
-                      navigate(item.path)
-                      setIsAppMenuExpanded(false)
-                    }}>
+                  <MainMenuItem key={item.path} active={isRoutes(item.path)} onClick={() => navigate(item.path)}>
                     <MainMenuItemLeft>
                       <MainMenuItemIcon>{item.icon}</MainMenuItemIcon>
                       <MainMenuItemText>{item.text}</MainMenuItemText>
