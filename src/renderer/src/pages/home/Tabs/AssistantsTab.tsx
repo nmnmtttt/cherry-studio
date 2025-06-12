@@ -155,6 +155,9 @@ const Assistants: FC<AssistantsTabProps> = ({
     },
     [allTags, assistants, getGroupedAssistants, handleGroupReorder, t, updateTagsOrder]
   )
+  //尝试过使用两个DragableList 但是会有问题
+  //也试过不用DragList 直接写 但是会有问题
+  //发现只有这样写是符合预期效果的
   if (assistantsTabSortType === 'tags') {
     return (
       <Container className="assistants-tab" ref={containerRef}>
