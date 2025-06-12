@@ -1,23 +1,27 @@
 import EmojiAvatar from '@renderer/components/Avatar/EmojiAvatar'
 import UserPopup from '@renderer/components/Popups/UserPopup'
-import { UserAvatar } from '@renderer/config/env'
+import { AppLogo, UserAvatar } from '@renderer/config/env'
 import { useTheme } from '@renderer/context/ThemeProvider'
 import { useAssistants } from '@renderer/hooks/useAssistant'
 import useAvatar from '@renderer/hooks/useAvatar'
 import { useChat } from '@renderer/hooks/useChat'
+import { useMinappPopup } from '@renderer/hooks/useMinappPopup'
 import { useSettings } from '@renderer/hooks/useSettings'
 import { useShortcut } from '@renderer/hooks/useShortcuts'
 import { useShowAssistants } from '@renderer/hooks/useStore'
+import i18n from '@renderer/i18n'
 import AssistantItem from '@renderer/pages/home/Tabs/components/AssistantItem'
 import { EVENT_NAMES, EventEmitter } from '@renderer/services/EventService'
 import { ThemeMode } from '@renderer/types'
 import { isEmoji } from '@renderer/utils'
-import { Avatar, Tooltip } from 'antd'
+import { Avatar, Dropdown } from 'antd'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   Blocks,
   ChevronDown,
   ChevronRight,
+  CircleHelp,
+  EllipsisVertical,
   FileSearch,
   Folder,
   Languages,
@@ -59,7 +63,7 @@ const MainSidebar: FC = () => {
   const avatar = useAvatar()
   const { userName, defaultPaintingProvider } = useSettings()
   const { t } = useTranslation()
-  const { theme } = useTheme()
+  const { theme, settedTheme, toggleTheme } = useTheme()
   const [isAppMenuExpanded, setIsAppMenuExpanded] = useState(false)
   const { showAssistants, toggleShowAssistants } = useShowAssistants()
 
@@ -68,6 +72,8 @@ const MainSidebar: FC = () => {
 
   const { activeAssistant, activeTopic, setActiveAssistant, setActiveTopic } = useChat()
   const { showTopics } = useSettings()
+
+  const { openMinapp } = useMinappPopup()
 
   useShortcut('toggle_show_assistants', toggleShowAssistants)
   useShortcut('toggle_show_topics', () => EventEmitter.emit(EVENT_NAMES.SWITCH_TOPIC_SIDEBAR))
@@ -128,6 +134,17 @@ const MainSidebar: FC = () => {
   ]
 
   const isRoutes = (path: string): boolean => pathname.startsWith(path)
+
+  const docsId = 'cherrystudio-docs'
+  const onOpenDocs = () => {
+    const isChinese = i18n.language.startsWith('zh')
+    openMinapp({
+      id: docsId,
+      name: t('docs.title'),
+      url: isChinese ? 'https://docs.cherry-ai.com/' : 'https://docs.cherry-ai.com/cherry-studio-wen-dang/en-us',
+      logo: AppLogo
+    })
+  }
 
   return (
     <Container
@@ -214,40 +231,57 @@ const MainSidebar: FC = () => {
           )}
           {userName && <UserMenuText>{userName}</UserMenuText>}
         </UserMenuLeft>
-        <Tooltip title={t('settings.title')} mouseEnterDelay={0.8} placement="right">
-          <Icon theme={theme} onClick={() => navigate('/settings/provider')} className="settings-icon">
-            <Settings size={18} className="icon" />
+
+        <Dropdown
+          placement="topRight"
+          trigger={['click']}
+          menu={{
+            items: [
+              {
+                key: 'theme',
+                label: (
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      toggleTheme()
+                    }}>
+                    {t('settings.theme.title')}: {t(`settings.theme.${settedTheme}`)}
+                  </span>
+                ),
+                icon: ThemeIcon()
+              },
+              {
+                key: 'about',
+                label: t('docs.title'),
+                icon: <CircleHelp size={16} className="icon" />,
+                onClick: onOpenDocs
+              },
+              {
+                key: 'settings',
+                label: t('settings.title'),
+                icon: <Settings size={16} className="icon" />,
+                onClick: () => navigate('/settings/provider')
+              }
+            ]
+          }}>
+          <Icon theme={theme} className="settings-icon">
+            <EllipsisVertical size={16} />
           </Icon>
-        </Tooltip>
+        </Dropdown>
       </UserMenu>
     </Container>
   )
 }
 
-export const ThemeIcon = () => {
-  const { t } = useTranslation()
-  const { theme, settedTheme, toggleTheme } = useTheme()
+const ThemeIcon = () => {
+  const { settedTheme } = useTheme()
 
-  const onChageTheme = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation()
-    toggleTheme()
-  }
-
-  return (
-    <Tooltip
-      title={t('settings.theme.title') + ': ' + t(`settings.theme.${settedTheme}`)}
-      mouseEnterDelay={0.8}
-      placement="right">
-      <Icon theme={theme} onClick={onChageTheme}>
-        {settedTheme === ThemeMode.dark ? (
-          <Moon size={18} className="icon" />
-        ) : settedTheme === ThemeMode.light ? (
-          <Sun size={18} className="icon" />
-        ) : (
-          <SunMoon size={18} className="icon" />
-        )}
-      </Icon>
-    </Tooltip>
+  return settedTheme === ThemeMode.dark ? (
+    <Moon size={16} className="icon" />
+  ) : settedTheme === ThemeMode.light ? (
+    <Sun size={16} className="icon" />
+  ) : (
+    <SunMoon size={16} className="icon" />
   )
 }
 

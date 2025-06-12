@@ -102,6 +102,7 @@ const SelectorStyle = createGlobalStyle`
   .ant-dropdown-menu {
     max-height: 40vh;
     overflow-y: auto;
+    border: 0.5px solid var(--color-border);
   }
 `
 

@@ -203,6 +203,20 @@
   overflow-x: hidden;
 }
 
+.ant-dropdown-menu {
+  max-height: 40vh;
+  overflow-y: auto;
+  border: 0.5px solid var(--color-border);
+  border-radius: 16px;
+
+  .ant-dropdown-menu-item {
+    padding: 5px;
+  }
+}
+.ant-dropdown-arrow + .ant-dropdown-menu {
+  border: none;
+}
+
 .ant-collapse {
   border: 1px solid var(--color-border);
   .ant-color-picker & {
