@@ -19,9 +19,9 @@ const HomePage: FC<{ style?: React.CSSProperties }> = ({ style }) => {
   }, [showAssistants, showTopics, topicPosition])
 
   return (
-    <HStack style={{ display: 'flex', flex: 1 }}>
+    <HStack style={{ display: 'flex', flex: 1 }} id="home-page">
       <MainSidebar />
-      <Container id="home-page" style={style}>
+      <Container style={style}>
         <ChatNavbar />
         <ContentContainer id="content-container">
           <Chat />
