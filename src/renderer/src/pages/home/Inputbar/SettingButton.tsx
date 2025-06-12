@@ -13,6 +13,7 @@ interface Props {
 const SettingButton: FC<Props> = ({ ToolbarButton }) => {
   return (
     <Popover
+      arrow={false}
       placement="topLeft"
       content={<SettingsTab />}
       trigger="click"
