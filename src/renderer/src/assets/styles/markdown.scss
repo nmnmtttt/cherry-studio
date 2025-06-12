@@ -157,15 +157,28 @@
   }
 
   table {
-    border-collapse: collapse;
+    --table-border-radius: 8px;
     margin: 1em 0;
     width: 100%;
+    border-radius: var(--table-border-radius);
+    overflow: hidden;
+    border-collapse: separate;
+    border: 0.5px solid var(--color-border);
+    border-spacing: 0;
   }
 
   th,
   td {
-    border: 0.5px solid var(--color-border);
+    border-right: 0.5px solid var(--color-border);
+    border-bottom: 0.5px solid var(--color-border);
     padding: 0.5em;
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  tr:last-child td {
+    border-bottom: none;
   }
 
   th {

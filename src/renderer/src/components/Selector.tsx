@@ -29,7 +29,7 @@ const Selector = <V extends string | number>({
   onChange = () => {},
   placement = 'bottomRight',
   size = 13,
-  placeholder = '待选择',
+  placeholder,
   disabled = false
 }: SelectorProps<V>) => {
   const [open, setOpen] = useState(false)
