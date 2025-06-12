@@ -1,5 +1,6 @@
 import { NavbarCenter, NavbarMain } from '@renderer/components/app/Navbar'
 import ModelSettings from '@renderer/pages/settings/ModelSettings/ModelSettings'
+import { Spin } from 'antd'
 import {
   Cloud,
   Command,
@@ -13,7 +14,7 @@ import {
   TextCursorInput,
   Zap
 } from 'lucide-react'
-import { FC } from 'react'
+import { FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
@@ -111,7 +112,14 @@ const SettingsPage: FC = () => {
         </SettingMenus>
         <SettingContent>
           <Routes>
-            <Route path="provider" element={<ProvidersList />} />
+            <Route
+              path="provider"
+              element={
+                <Suspense fallback={<Spin />}>
+                  <ProvidersList />
+                </Suspense>
+              }
+            />
             <Route path="model" element={<ModelSettings />} />
             <Route path="web-search" element={<WebSearchSettings />} />
             <Route path="general" element={<GeneralSettings />} />
