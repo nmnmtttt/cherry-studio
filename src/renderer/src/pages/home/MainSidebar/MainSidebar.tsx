@@ -129,12 +129,14 @@ const MainSidebar: FC = () => {
 
   const isRoutes = (path: string): boolean => pathname.startsWith(path)
 
-  if (!showAssistants) {
-    return null
-  }
-
   return (
-    <Container id="main-sidebar">
+    <Container
+      id="main-sidebar"
+      style={{
+        width: showAssistants ? 'var(--assistants-width)' : '0px',
+        opacity: showAssistants ? 1 : 0,
+        overflow: showAssistants ? 'initial' : 'hidden'
+      }}>
       <MainNavbar />
       <MainMenu>
         <MainMenuItem active={isAppMenuExpanded} onClick={() => setIsAppMenuExpanded(!isAppMenuExpanded)}>

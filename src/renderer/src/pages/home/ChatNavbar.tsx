@@ -10,11 +10,12 @@ import { modelGenerating } from '@renderer/hooks/useRuntime'
 import { useSettings } from '@renderer/hooks/useSettings'
 import { useShortcut } from '@renderer/hooks/useShortcuts'
 import { useShowAssistants } from '@renderer/hooks/useStore'
+import { EVENT_NAMES, EventEmitter } from '@renderer/services/EventService'
 import { useAppDispatch } from '@renderer/store'
 import { setNarrowMode } from '@renderer/store/settings'
 import { Tooltip } from 'antd'
 import { t } from 'i18next'
-import { LayoutGrid, PanelLeft, PanelRight, Search } from 'lucide-react'
+import { LayoutGrid, MessageSquareDiff, PanelLeft, PanelRight, Search } from 'lucide-react'
 import { FC } from 'react'
 import { useNavigate } from 'react-router'
 import styled from 'styled-components'
@@ -42,6 +43,11 @@ const ChatNavbar: FC = () => {
     <Navbar className="home-navbar">
       <NavbarContainer $isFullscreen={isFullscreen} $showSidebar={showAssistants} className="home-navbar-right">
         <HStack alignItems="center">
+          <Tooltip title={t('settings.shortcuts.new_topic')} mouseEnterDelay={0.8}>
+            <NavbarIcon onClick={() => EventEmitter.emit(EVENT_NAMES.ADD_NEW_TOPIC)} style={{ marginRight: 5 }}>
+              <MessageSquareDiff size={18} />
+            </NavbarIcon>
+          </Tooltip>
           <NavbarIcon
             onClick={() => toggleShowAssistants()}
             style={{ marginRight: 8, marginLeft: isMac && !isFullscreen ? 4 : -12 }}>
@@ -85,11 +91,12 @@ const NavbarContainer = styled.div<{ $isFullscreen: boolean; $showSidebar: boole
   max-height: var(--navbar-height);
   min-height: var(--navbar-height);
   justify-content: space-between;
-  padding-left: ${({ $showSidebar }) => (isMac ? ($showSidebar ? '10px' : '75px') : '25px')};
+  margin-left: ${({ $showSidebar }) => ($showSidebar ? '-37px' : isMac ? '75px' : '10px')};
   font-weight: bold;
   color: var(--color-text-1);
   padding-right: ${({ $isFullscreen }) => ($isFullscreen ? '12px' : isWindows ? '140px' : isLinux ? '120px' : '12px')};
   -webkit-app-region: drag;
+  transition: margin-left 0.3s;
 `
 
 export const NavbarIcon = styled.div`

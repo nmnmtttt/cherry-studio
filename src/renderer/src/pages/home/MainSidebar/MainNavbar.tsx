@@ -1,9 +1,8 @@
 import SearchPopup from '@renderer/components/Popups/SearchPopup'
 import { isMac } from '@renderer/config/constant'
-import { EVENT_NAMES, EventEmitter } from '@renderer/services/EventService'
 import { Tooltip } from 'antd'
 import { t } from 'i18next'
-import { MessageSquareDiff, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { FC } from 'react'
 import styled from 'styled-components'
 
@@ -21,11 +20,6 @@ const HeaderNavbar: FC<Props> = () => {
           </Tooltip>
         )}
       </div>
-      <Tooltip title={t('settings.shortcuts.new_topic')} mouseEnterDelay={0.8}>
-        <NavbarIcon onClick={() => EventEmitter.emit(EVENT_NAMES.ADD_NEW_TOPIC)} style={{ marginRight: 5 }}>
-          <MessageSquareDiff size={18} />
-        </NavbarIcon>
-      </Tooltip>
     </Container>
   )
 }
