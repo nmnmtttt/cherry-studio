@@ -666,6 +666,7 @@ const MainContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: 10px;
   height: 100%;
   background-color: var(--color-background);
 `

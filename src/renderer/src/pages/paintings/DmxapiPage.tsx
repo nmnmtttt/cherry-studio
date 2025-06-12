@@ -859,6 +859,7 @@ const MainContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: 10px;
   height: 100%;
   background-color: var(--color-background);
 `
@@ -866,6 +867,7 @@ const MainContainer = styled.div`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   min-height: 95px;
   max-height: 95px;
   position: relative;
@@ -977,7 +979,8 @@ const ModeSegmentedContainer = styled.div`
 
 const EmptyImgBox = styled.div`
   display: flex;
-  flex: 1;
+  width: 70vh;
+  height: 100%;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -985,7 +988,7 @@ const EmptyImgBox = styled.div`
 
 const EmptyImg = styled.div<{ bgUrl?: string }>`
   width: 70vh;
-  height: 70vh;
+  height: 100%;
   background-size: cover;
   background-image: ${(props) => (props.bgUrl ? `url(${props.bgUrl})` : `url(${DMXAPIToImg})`)};
 `

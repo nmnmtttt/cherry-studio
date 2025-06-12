@@ -913,6 +913,7 @@ const MainContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: 10px;
   height: 100%;
   background-color: var(--color-background);
 `
@@ -920,6 +921,7 @@ const MainContainer = styled.div`
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   min-height: 95px;
   max-height: 95px;
   position: relative;

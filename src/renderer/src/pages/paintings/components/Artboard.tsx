@@ -104,6 +104,7 @@ const Artboard: FC<ArtboardProps> = ({
 }
 
 const Container = styled.div`
+  min-height: 0;
   display: flex;
   flex: 1;
   flex-direction: row;
@@ -114,11 +115,10 @@ const Container = styled.div`
 const ImagePlaceholder = styled.div`
   display: flex;
   width: 70vh;
-  height: 70vh;
+  height: 100%;
   background-color: var(--color-background-soft);
   align-items: center;
   justify-content: center;
-  padding: 24px;
   box-sizing: border-box;
 `
 

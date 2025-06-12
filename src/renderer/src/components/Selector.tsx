@@ -3,13 +3,23 @@ import { Check, ChevronsUpDown } from 'lucide-react'
 import { ReactNode, useMemo, useState } from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
+interface SelectorOption<V = string | number> {
+  label: string | ReactNode
+  value: V
+  type?: 'group'
+  options?: SelectorOption<V>[]
+  disabled?: boolean
+}
+
 interface SelectorProps<V = string | number> {
-  options: { label: string | ReactNode; value: V }[]
+  options: SelectorOption<V>[]
   value?: V
   placeholder?: string
   placement?: 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight' | 'top' | 'bottom'
   /** 字体大小 */
   size?: number
+  /** 是否禁用 */
+  disabled?: boolean
   onChange: (value: V) => void
 }
 
@@ -19,27 +29,47 @@ const Selector = <V extends string | number>({
   onChange = () => {},
   placement = 'bottomRight',
   size = 13,
-  placeholder
+  placeholder = '待选择',
+  disabled = false
 }: SelectorProps<V>) => {
   const [open, setOpen] = useState(false)
 
   const label = useMemo(() => {
     if (value) {
-      return options?.find((option) => option.value === value)?.label
+      const findLabel = (opts: SelectorOption<V>[]): string | ReactNode | undefined => {
+        for (const opt of opts) {
+          if (opt.value === value) {
+            return opt.label
+          }
+          if (opt.options) {
+            const found = findLabel(opt.options)
+            if (found) return found
+          }
+        }
+        return undefined
+      }
+      return findLabel(options) || placeholder
     }
     return placeholder
   }, [options, value, placeholder])
 
   const items = useMemo(() => {
-    return options.map((option) => ({
+    const mapOption = (option: SelectorOption<V>) => ({
       key: option.value,
       label: option.label,
-      extra: <CheckIcon>{option.value === value && <Check size={14} />}</CheckIcon>
-    }))
+      extra: <CheckIcon>{option.value === value && <Check size={14} />}</CheckIcon>,
+      disabled: option.disabled,
+      type: option.type || (option.options ? 'group' : undefined),
+      children: option.options?.map(mapOption)
+    })
+
+    return options.map(mapOption)
   }, [options, value])
 
   function onClick(e: { key: string }) {
-    onChange(e.key as V)
+    if (!disabled) {
+      onChange(e.key as V)
+    }
   }
 
   return (
@@ -55,11 +85,11 @@ const Selector = <V extends string | number>({
       <Dropdown
         overlayClassName="selector-dropdown"
         menu={{ items, onClick }}
-        trigger={['click']}
+        trigger={disabled ? [] : ['click']}
         placement={placement}
-        open={open}
-        onOpenChange={setOpen}>
-        <Label $size={size} $open={open}>
+        open={open && !disabled}
+        onOpenChange={disabled ? undefined : setOpen}>
+        <Label $size={size} $open={open} $disabled={disabled}>
           {label}
           <LabelIcon size={size + 3} />
         </Label>
@@ -82,23 +112,32 @@ const LabelIcon = styled(ChevronsUpDown)`
   transition: background-color 0.2s;
 `
 
-const Label = styled.div<{ $size: number; $open: boolean }>`
+const Label = styled.div<{ $size: number; $open: boolean; $disabled: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
   border-radius: 99px;
-  padding: 1px 2px 1px 10px;
+  padding: 3px 2px 3px 10px;
   font-size: ${({ $size }) => $size}px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+  line-height: 1;
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${({ $disabled }) => ($disabled ? 0.6 : 1)};
+  transition:
+    background-color 0.2s,
+    opacity 0.2s;
   &:hover {
-    background-color: var(--color-background-mute);
-    ${LabelIcon} {
-      background-color: var(--color-background-mute);
-    }
+    ${({ $disabled }) =>
+      !$disabled &&
+      css`
+        background-color: var(--color-background-mute);
+        ${LabelIcon} {
+          background-color: var(--color-background-mute);
+        }
+      `}
   }
-  ${({ $open }) =>
+  ${({ $open, $disabled }) =>
     $open &&
+    !$disabled &&
     css`
       background-color: var(--color-background-mute);
       ${LabelIcon} {
