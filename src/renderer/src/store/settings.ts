@@ -56,7 +56,6 @@ export interface SettingsState {
   tray: boolean
   theme: ThemeMode
   userTheme: UserTheme
-  windowStyle: 'transparent' | 'opaque'
   fontSize: number
   topicPosition: 'left' | 'right'
   showTopicTime: boolean
@@ -205,7 +204,6 @@ export const initialState: SettingsState = {
   userTheme: {
     colorPrimary: '#00b96b'
   },
-  windowStyle: 'opaque',
   fontSize: 14,
   topicPosition: 'left',
   showTopicTime: false,
@@ -393,9 +391,6 @@ const settingsSlice = createSlice({
     },
     setFontSize: (state, action: PayloadAction<number>) => {
       state.fontSize = action.payload
-    },
-    setWindowStyle: (state, action: PayloadAction<'transparent' | 'opaque'>) => {
-      state.windowStyle = action.payload
     },
     setTopicPosition: (state, action: PayloadAction<'left' | 'right'>) => {
       state.topicPosition = action.payload
@@ -699,7 +694,6 @@ export const {
   setTheme,
   setUserTheme,
   setFontSize,
-  setWindowStyle,
   setTopicPosition,
   setShowTopicTime,
   setPinTopicsToTop,

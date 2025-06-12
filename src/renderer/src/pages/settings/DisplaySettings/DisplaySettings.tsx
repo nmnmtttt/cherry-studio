@@ -1,7 +1,7 @@
 import { SyncOutlined } from '@ant-design/icons'
 import CodeEditor from '@renderer/components/CodeEditor'
 import { HStack } from '@renderer/components/Layout'
-import { isMac, THEME_COLOR_PRESETS } from '@renderer/config/constant'
+import { THEME_COLOR_PRESETS } from '@renderer/config/constant'
 import { useTheme } from '@renderer/context/ThemeProvider'
 import { useSettings } from '@renderer/hooks/useSettings'
 import useUserTheme from '@renderer/hooks/useUserTheme'
@@ -51,8 +51,7 @@ const ColorCircle = styled.div<{ color: string; isActive?: boolean }>`
 `
 
 const DisplaySettings: FC = () => {
-  const { windowStyle, setWindowStyle, showTopicTime, pinTopicsToTop, customCss, sidebarIcons, setTheme, userTheme } =
-    useSettings()
+  const { showTopicTime, pinTopicsToTop, customCss, sidebarIcons, setTheme, userTheme } = useSettings()
   const { theme, settedTheme } = useTheme()
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
@@ -61,13 +60,6 @@ const DisplaySettings: FC = () => {
 
   const [visibleIcons, setVisibleIcons] = useState(sidebarIcons?.visible || DEFAULT_SIDEBAR_ICONS)
   const [disabledIcons, setDisabledIcons] = useState(sidebarIcons?.disabled || [])
-
-  const handleWindowStyleChange = useCallback(
-    (checked: boolean) => {
-      setWindowStyle(checked ? 'transparent' : 'opaque')
-    },
-    [setWindowStyle]
-  )
 
   const handleColorPrimaryChange = useCallback(
     (colorHex: string) => {
@@ -182,15 +174,6 @@ const DisplaySettings: FC = () => {
             />
           </HStack>
         </SettingRow>
-        {isMac && (
-          <>
-            <SettingDivider />
-            <SettingRow>
-              <SettingRowTitle>{t('settings.theme.window.style.transparent')}</SettingRowTitle>
-              <Switch checked={windowStyle === 'transparent'} onChange={handleWindowStyleChange} />
-            </SettingRow>
-          </>
-        )}
       </SettingGroup>
       <SettingGroup theme={theme}>
         <SettingTitle>{t('settings.display.zoom.title')}</SettingTitle>

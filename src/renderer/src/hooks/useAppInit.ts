@@ -19,7 +19,7 @@ import useUpdateHandler from './useUpdateHandler'
 
 export function useAppInit() {
   const dispatch = useAppDispatch()
-  const { proxyUrl, language, windowStyle, autoCheckUpdate, proxyMode, customCss, enableDataCollection } = useSettings()
+  const { proxyUrl, language, autoCheckUpdate, proxyMode, customCss, enableDataCollection } = useSettings()
   const { minappShow } = useRuntime()
   const { setDefaultModel, setTopicNamingModel, setTranslateModel } = useDefaultModel()
   const avatar = useLiveQuery(() => db.settings.get('image://avatar'))
@@ -63,16 +63,15 @@ export function useAppInit() {
   }, [language])
 
   useEffect(() => {
-    const transparentWindow = windowStyle === 'transparent' && isMac && !minappShow
+    const transparentWindow = isMac && !minappShow
 
     if (minappShow) {
-      window.root.style.background =
-        windowStyle === 'transparent' && isMac ? 'var(--color-background)' : 'var(--navbar-background)'
+      window.root.style.background = isMac ? 'var(--color-background)' : 'var(--navbar-background)'
       return
     }
 
     window.root.style.background = transparentWindow ? 'var(--navbar-background-mac)' : 'var(--navbar-background)'
-  }, [windowStyle, minappShow, theme])
+  }, [minappShow, theme])
 
   useEffect(() => {
     if (isLocalAi) {

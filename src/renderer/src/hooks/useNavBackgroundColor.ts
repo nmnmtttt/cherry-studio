@@ -1,13 +1,7 @@
 import { isMac } from '@renderer/config/constant'
 
-import { useSettings } from './useSettings'
-
 function useNavBackgroundColor() {
-  const { windowStyle } = useSettings()
-
-  const macTransparentWindow = isMac && windowStyle === 'transparent'
-
-  if (macTransparentWindow) {
+  if (isMac) {
     return 'transparent'
   }
 

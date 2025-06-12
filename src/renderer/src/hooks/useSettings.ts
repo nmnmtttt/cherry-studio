@@ -15,8 +15,7 @@ import {
   SettingsState,
   setTopicPosition,
   setTray as _setTray,
-  setTrayOnClose,
-  setWindowStyle
+  setTrayOnClose
 } from '@renderer/store/settings'
 import { SidebarIcon, ThemeMode, TranslateLanguageVarious } from '@renderer/types'
 import { FeedUrl } from '@shared/config/constant'
@@ -66,9 +65,6 @@ export function useSettings() {
 
     setTheme(theme: ThemeMode) {
       dispatch(setTheme(theme))
-    },
-    setWindowStyle(windowStyle: 'transparent' | 'opaque') {
-      dispatch(setWindowStyle(windowStyle))
     },
     setTargetLanguage(targetLanguage: TranslateLanguageVarious) {
       dispatch(setTargetLanguage(targetLanguage))

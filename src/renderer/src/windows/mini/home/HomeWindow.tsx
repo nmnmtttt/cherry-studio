@@ -45,7 +45,7 @@ const HomeWindow: FC = () => {
   const { defaultModel, quickAssistantModel } = useDefaultModel()
   // 如果 quickAssistantModel 未設定，則使用 defaultModel
   const model = quickAssistantModel || defaultModel
-  const { language, readClipboardAtStartup, windowStyle } = useSettings()
+  const { language, readClipboardAtStartup } = useSettings()
   const { theme } = useTheme()
   const { t } = useTranslation()
   const inputBarRef = useRef<HTMLDivElement>(null)
@@ -261,7 +261,7 @@ const HomeWindow: FC = () => {
   const backgroundColor = () => {
     // ONLY MAC: when transparent style + light theme: use vibrancy effect
     // because the dark style under mac's vibrancy effect has not been implemented
-    if (isMac && windowStyle === 'transparent' && theme === ThemeMode.light) {
+    if (isMac && theme === ThemeMode.light) {
       return 'transparent'
     }
 
