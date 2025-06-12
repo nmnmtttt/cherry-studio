@@ -210,7 +210,7 @@ const MainSidebar: FC = () => {
           ) : (
             <AvatarImg src={avatar || UserAvatar} draggable={false} className="nodrag" />
           )}
-          <UserMenuText>{userName}</UserMenuText>
+          {userName && <UserMenuText>{userName}</UserMenuText>}
         </UserMenuLeft>
         <Tooltip title={t('settings.title')} mouseEnterDelay={0.8} placement="right">
           <Icon theme={theme} onClick={() => navigate('/settings/provider')} className="settings-icon">
@@ -289,6 +289,7 @@ const AvatarImg = styled(Avatar)`
 const UserMenuText = styled.div`
   font-size: 14px;
   font-weight: 500;
+  margin-right: 3px;
 `
 
 const Icon = styled.div<{ theme: string }>`

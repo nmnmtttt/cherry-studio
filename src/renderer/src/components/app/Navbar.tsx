@@ -60,7 +60,7 @@ const CloseIcon = () => {
       type="text"
       onClick={() => navigate('/')}
       className="nodrag"
-      style={{ marginRight: 2 }}
+      style={{ marginRight: 2, marginLeft: 5 }}
       icon={<CircleArrowLeft size={20} color="var(--color-icon)" style={{ marginTop: 2 }} />}
     />
   )

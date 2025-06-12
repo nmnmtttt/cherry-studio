@@ -243,7 +243,7 @@ const ProvidersList: FC = () => {
   })
 
   useEffect(() => {
-    setTimeout(() => setReady(true), 250)
+    setTimeout(() => setReady(true), 200)
   }, [])
 
   if (!ready) {

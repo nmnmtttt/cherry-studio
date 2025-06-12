@@ -89,18 +89,20 @@ const PageContainer = styled(motion.div)`
   width: 100%;
   height: 100%;
   z-index: 10;
+  will-change: transform;
+  backface-visibility: hidden;
 `
 
 const pageTransition = {
   type: 'tween',
-  duration: 0.15,
-  ease: 'easeInOut'
+  duration: 0.2,
+  ease: [0.4, 0.0, 0.2, 1]
 }
 
 const pageVariants = {
-  initial: { y: '100%' },
-  animate: { y: 0 },
-  exit: { y: '100%' }
+  initial: { translateY: '100%' },
+  animate: { translateY: '0%' },
+  exit: { translateY: '100%' }
 }
 
 export default RouteContainer
